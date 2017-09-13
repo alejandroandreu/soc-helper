@@ -1,7 +1,7 @@
 import configparser
-import var
+import utils
 
-class SHConfig:
+class ProviderConfig:
     def __init__(self, path):
         self.path = path
         self.config = configparser.ConfigParser()
@@ -27,7 +27,7 @@ class SHConfig:
                 print("{key} = {value}".format(key=key, value=value))
 
     def validate(self):
-        for config in var.VALID_CONFIGURATIONS:
+        for config in utils.VALID_CONFIGURATIONS:
             lowercase_keys = [key.lower() for key in self.keys()]
             if set(lowercase_keys) == set(config):
                 return True
