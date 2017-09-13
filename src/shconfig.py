@@ -1,4 +1,5 @@
 import configparser
+import var
 
 class SHConfig:
     def __init__(self, path):
@@ -24,3 +25,11 @@ class SHConfig:
             print("[{}]".format(section))
             for key, value in self.config.items(section):
                 print("{key} = {value}".format(key=key, value=value))
+
+    def validate(self):
+        for config in var.VALID_CONFIGURATIONS:
+            lowercase_keys = [key.lower() for key in self.keys()]
+            if set(lowercase_keys) == set(config):
+                return True
+
+        return False
