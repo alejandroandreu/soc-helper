@@ -1,6 +1,23 @@
 import configparser
 import utils
 
+class ProviderException(Exception):
+    """Basic exception for errors raised by providers"""
+
+class ProviderConfigException(ProviderException):
+    """Raised when a provider configuration file is wrong"""
+
+class ProviderRuntimeException(ProviderException):
+    """
+    Raised when a provider fails at runtime. There might be a few reasons
+    for this: no internet connection, API calls have changed, etc.
+    """
+    pass
+
+class Provider:
+    def __init__(self, configuration):
+        pass
+
 class ProviderConfig:
     def __init__(self, path):
         self.path = path
@@ -8,8 +25,7 @@ class ProviderConfig:
         try:
             self.config.read(self.path)
         except configparser.Error:
-            print("File {} doesn't seem to be a valid configuration file".format(self.path))
-            print("Supported file structure: https://docs.python.org/3/library/configparser.html#supported-ini-file-structure")
+            raise ProviderConfigException
 
     def keys(self):
         keys = []
@@ -32,4 +48,4 @@ class ProviderConfig:
             if set(lowercase_keys) == set(config):
                 return True
 
-        return False
+        raise ProviderConfigException
