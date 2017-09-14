@@ -14,11 +14,24 @@ class ProviderRuntimeException(ProviderException):
     """
     pass
 
-class Provider:
-    def __init__(self, configuration):
-        pass
+class SimpleProvider:
+    """
+    A.k.a. URL providers, which do not need any kind of authentication
+    or calls made to an API.
+    """
+    def __init__(self, pc):
+        self.type = "simple"
+        self.name = pc.config.get(pc.config.sections()[0], "Name")
+        self.description = pc.config.get(pc.config.sections()[0], "Description")
+        self.provider = pc.config.get(pc.config.sections()[0], "Provider")
+        self.base_url = pc.config.get(pc.config.sections()[0], "BaseUrl")
 
 class ProviderConfig:
+    """
+    Loads and validates a provider configuration file. If the file does
+    not exist or the configuration is incorrect a ProviderConfigException
+    is raised.
+    """
     def __init__(self, path):
         self.path = path
         self.config = configparser.ConfigParser()
@@ -26,6 +39,7 @@ class ProviderConfig:
             self.config.read(self.path)
         except configparser.Error:
             raise ProviderConfigException
+        self.validate()
 
     def keys(self):
         keys = []
