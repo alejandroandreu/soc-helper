@@ -3,9 +3,11 @@ import utils
 
 class ProviderException(Exception):
     """Basic exception for errors raised by providers"""
+    pass
 
 class ProviderConfigException(ProviderException):
     """Raised when a provider configuration file is wrong"""
+    pass
 
 class ProviderRuntimeException(ProviderException):
     """
@@ -16,7 +18,7 @@ class ProviderRuntimeException(ProviderException):
 
 class SimpleProvider:
     """
-    A.k.a. URL providers, which do not need any kind of authentication
+    A.K.A. URL providers, which do not need any kind of authentication
     or calls made to an API.
     """
     def __init__(self, pc):
@@ -25,6 +27,9 @@ class SimpleProvider:
         self.description = pc.config.get(pc.config.sections()[0], "Description")
         self.provider = pc.config.get(pc.config.sections()[0], "Provider")
         self.base_url = pc.config.get(pc.config.sections()[0], "BaseUrl")
+
+    def get_url(self, arg):
+        return self.base_url.replace('$$ARG$$', arg)
 
 class ProviderConfig:
     """
