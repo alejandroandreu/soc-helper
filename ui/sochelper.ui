@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>442</width>
-    <height>297</height>
+    <width>161</width>
+    <height>195</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,7 +20,7 @@
       <item>
        <widget class="QTabWidget" name="tabWidget">
         <property name="currentIndex">
-         <number>1</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="ip_tab">
          <attribute name="title">
@@ -113,13 +113,13 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>442</width>
-     <height>21</height>
+     <width>161</width>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Fi&amp;le</string>
     </property>
     <addaction name="actionPreferences"/>
     <addaction name="separator"/>
@@ -137,7 +137,7 @@
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionPreferences">
    <property name="text">
-    <string>Preferences</string>
+    <string>&amp;Preferences</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+,</string>
@@ -145,7 +145,7 @@
   </action>
   <action name="actionQuit">
    <property name="text">
-    <string>Quit</string>
+    <string>&amp;Quit</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+Q</string>
@@ -153,7 +153,7 @@
   </action>
   <action name="actionAbout_SOC_Helper">
    <property name="text">
-    <string>About SOC Helper</string>
+    <string>&amp;About SOC Helper</string>
    </property>
   </action>
  </widget>

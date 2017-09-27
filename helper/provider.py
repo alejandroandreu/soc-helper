@@ -1,19 +1,21 @@
 import configparser
 import utils
 
+def create(pc):
+    provider_type = pc.config.get(pc.config.sections()[0], "Provider")
+    switcher = {
+            "SimpleProvider": SimpleProvider(pc)
+            }
+    return switcher.get(provider_type)
+
+
 class ProviderException(Exception):
     """Basic exception for errors raised by providers"""
     pass
 
 class ProviderConfigException(ProviderException):
     """Raised when a provider configuration file is wrong"""
-    pass
-
-class ProviderRuntimeException(ProviderException):
-    """
-    Raised when a provider fails at runtime. There might be a few reasons
-    for this: no internet connection, API calls have changed, etc.
-    """
+    # TODO: Print which file is wrong
     pass
 
 class SimpleProvider:
@@ -39,6 +41,7 @@ class ProviderConfig:
     """
     def __init__(self, path):
         self.path = path
+        print(path)
         self.config = configparser.ConfigParser()
         try:
             self.config.read(self.path)
