@@ -29,6 +29,11 @@ class HelperGUI(Ui_MainWindow):
                     "url": self.url_tab
                     }
             tab = tab_switcher.get(key)
+            provider_zone_switch = {
+            		"ip": self.ip_providers,
+            		"url": self.url_providers
+            		}
+            provider_zone = provider_zone_switch.get(key)
             # Load provider names in an array first
             for provider in providers[key]:
                 names.append(provider.name)
@@ -38,9 +43,9 @@ class HelperGUI(Ui_MainWindow):
             col = 0
             for name in names:
                 print("{} {}".format(row, col))
-                self.checks[key][name] = QtWidgets.QCheckBox(self.ip_tab)
+                self.checks[key][name] = QtWidgets.QCheckBox(tab)
                 self.checks[key][name].setObjectName(name)
-                self.ip_providers.addWidget(self.checks[key][name], row, col, 1, 1)
+                provider_zone.addWidget(self.checks[key][name], row, col, 1, 1)
                 self.checks[key][name].setText(_translate("MainWindow", name))
                 check_counter += 1
                 col = check_counter % utils.MAX_CHECKS_COLS
@@ -50,7 +55,7 @@ class HelperGUI(Ui_MainWindow):
     def load_providers(self, provider_dir):
         providers = {}
         # TODO: Enable the rest of the providers
-        for i in ["ip"]:
+        for i in ["ip", "url"]:
             providers[i] = []
             provider_configs_folder = provider_dir + "/" + i
             provider_configs = os.listdir(provider_configs_folder)
