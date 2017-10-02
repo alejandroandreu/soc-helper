@@ -22,6 +22,12 @@ class HelperGUI(Ui_MainWindow):
         self.url_search_button.clicked.connect(self.gourl)
         self.url_search_input.returnPressed.connect(self.gourl)
 
+    def popup(self, title, message):
+        """
+        Display a popup with the given message
+        """
+        QtWidgets.QMessageBox.about(main_window, title, message)
+
     def draw_checkboxes(self, providers):
         """
         Iterate over providers and load checkboxes on every tab accordingly.
