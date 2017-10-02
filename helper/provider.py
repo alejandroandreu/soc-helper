@@ -4,11 +4,12 @@ import utils
 
 def create(pc):
     provider_type = pc.config.get(pc.config.sections()[0], "Provider")
-    switcher = {
-            "SimpleProvider": SimpleProvider(pc),
-            "VirusTotalUrlProvider": VirusTotalUrlProvider(pc)
-            }
-    return switcher.get(provider_type)
+    if provider_type == "SimpleProvider":
+        return SimpleProvider(pc)
+    elif provider_type == "VirusTotalUrlProvider":
+        return VirusTotalUrlProvider(pc)
+    else:
+        raise ProviderException
 
 
 class ProviderException(Exception):
@@ -34,7 +35,7 @@ class VirusTotalUrlProvider:
         self.description = pc.config.get(pc.config.sections()[0], "Description")
         self.provider = pc.config.get(pc.config.sections()[0], "Provider")
         self.api_key = pc.config.get(pc.config.sections()[0], "ApiKey")
-        self.base_url = 'https://www.virustotal.com/vtapi/v2/url/reportz'
+        self.base_url = 'https://www.virustotal.com/vtapi/v2/url/report'
 
     def get_url(self, url):
         vt_params = { 'apikey': self.api_key, 'resource': url }

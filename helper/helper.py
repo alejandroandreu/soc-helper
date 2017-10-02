@@ -16,6 +16,10 @@ class HelperGUI(Ui_MainWindow):
         self.checks = {}
         self.draw_checkboxes(self.providers)
 
+        # Tie input fields and "Go" buttons to functions
+        # self.ip_search_button.clicked.connect(self.go)
+        # self.ip_search_input.returnPressed.connect(self.go)
+
     def draw_checkboxes(self, providers):
         """
         Iterate over providers and load checkboxes on every tab accordingly.
@@ -63,7 +67,7 @@ class HelperGUI(Ui_MainWindow):
                 providers[i].append(provider.create(provider.ProviderConfig(pc_full_path)))
         return providers
 
-    def go(tab):
+    def go(self, tab):
         """
         Checks which checkboxes are marked in a given tab, then gets a
         valid URL for each one of them.
