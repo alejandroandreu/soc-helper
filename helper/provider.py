@@ -1,6 +1,7 @@
 import requests
 import configparser
 import utils
+from urllib.parse import urlparse, quote_plus
 
 def create(pc):
     provider_type = pc.config.get(pc.config.sections()[0], "Provider")
@@ -8,6 +9,8 @@ def create(pc):
         return SimpleProvider(pc)
     elif provider_type == "VirusTotalUrlProvider":
         return VirusTotalUrlProvider(pc)
+    elif provider_type == "SnapitoProvider":
+        return SnapitoProvider(pc)
     else:
         raise ProviderException
 
@@ -45,6 +48,22 @@ class VirusTotalUrlProvider:
         except:
             raise VTProviderException
         return json_response['permalink']
+
+class SnapitoProvider:
+    """
+    Provider to get screenshots of URLs
+    """
+    def __init__(self, pc):
+        self.type = "complex"
+        self.name = pc.config.get(pc.config.sections()[0], "Name")
+        self.description = pc.config.get(pc.config.sections()[0], "Description")
+        self.provider = pc.config.get(pc.config.sections()[0], "Provider")
+
+    def get_url(self, url):
+        return "https://snapito.com/screenshots/{domain}.html?size=800x0&screen=1024x768&cache=2592000&delay=-1&url={encoded_url}".format(
+                domain = urlparse(url).netloc,
+                encoded_url = quote_plus(url)
+                )
 
 
 class SimpleProvider:
