@@ -42,7 +42,6 @@ class HelperGUI(Ui_MainWindow):
             row = 0
             col = 0
             for name in names:
-                print("{} {}".format(row, col))
                 self.checks[key][name] = QtWidgets.QCheckBox(tab)
                 self.checks[key][name].setObjectName(name)
                 provider_zone.addWidget(self.checks[key][name], row, col, 1, 1)

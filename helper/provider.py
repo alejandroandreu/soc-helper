@@ -1,10 +1,12 @@
+import requests
 import configparser
 import utils
 
 def create(pc):
     provider_type = pc.config.get(pc.config.sections()[0], "Provider")
     switcher = {
-            "SimpleProvider": SimpleProvider(pc)
+            "SimpleProvider": SimpleProvider(pc),
+            "VirusTotalUrlProvider": VirusTotalUrlProvider(pc)
             }
     return switcher.get(provider_type)
 
@@ -13,10 +15,36 @@ class ProviderException(Exception):
     """Basic exception for errors raised by providers"""
     pass
 
+class VTProviderException(ProviderException):
+    """Raised when there is an error obtaining the final VirusTotal URL"""
+    pass
+
 class ProviderConfigException(ProviderException):
     """Raised when a provider configuration file is wrong"""
     # TODO: Print which file is wrong
     pass
+
+class VirusTotalUrlProvider:
+    """
+    Provider that leverages the VirusTotal API to analyze a URL
+    """
+    def __init__(self, pc):
+        self.type = "complex"
+        self.name = pc.config.get(pc.config.sections()[0], "Name")
+        self.description = pc.config.get(pc.config.sections()[0], "Description")
+        self.provider = pc.config.get(pc.config.sections()[0], "Provider")
+        self.api_key = pc.config.get(pc.config.sections()[0], "ApiKey")
+        self.base_url = 'https://www.virustotal.com/vtapi/v2/url/reportz'
+
+    def get_url(self, url):
+        vt_params = { 'apikey': self.api_key, 'resource': url }
+        try:
+            response = requests.post(self.base_url, params=vt_params)
+            json_response = response.json()
+        except:
+            raise VTProviderException
+        return json_response['permalink']
+
 
 class SimpleProvider:
     """
@@ -41,7 +69,6 @@ class ProviderConfig:
     """
     def __init__(self, path):
         self.path = path
-        print(path)
         self.config = configparser.ConfigParser()
         try:
             self.config.read(self.path)
