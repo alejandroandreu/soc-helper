@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui import Ui_MainWindow
-import provider, utils, sys, os
+import provider, utils, sys, os, webbrowser
 
 class HelperGUI(Ui_MainWindow):
     """
@@ -17,8 +17,10 @@ class HelperGUI(Ui_MainWindow):
         self.draw_checkboxes(self.providers)
 
         # Tie input fields and "Go" buttons to functions
-        # self.ip_search_button.clicked.connect(self.go)
-        # self.ip_search_input.returnPressed.connect(self.go)
+        self.ip_search_button.clicked.connect(self.goip)
+        self.ip_search_input.returnPressed.connect(self.goip)
+        self.url_search_button.clicked.connect(self.gourl)
+        self.url_search_input.returnPressed.connect(self.gourl)
 
     def draw_checkboxes(self, providers):
         """
@@ -34,9 +36,9 @@ class HelperGUI(Ui_MainWindow):
                     }
             tab = tab_switcher.get(key)
             provider_zone_switch = {
-            		"ip": self.ip_providers,
-            		"url": self.url_providers
-            		}
+                    "ip": self.ip_providers,
+                    "url": self.url_providers
+                    }
             provider_zone = provider_zone_switch.get(key)
             # Load provider names in an array first
             for provider in providers[key]:
@@ -67,12 +69,61 @@ class HelperGUI(Ui_MainWindow):
                 providers[i].append(provider.create(provider.ProviderConfig(pc_full_path)))
         return providers
 
-    def go(self, tab):
+    # TODO: Unify all "go" functions
+    def goip(self):
         """
-        Checks which checkboxes are marked in a given tab, then gets a
+        Checks which checkboxes are marked in the IP tab, then gets a
         valid URL for each one of them.
         """
-        pass
+        active_checks = []
+        for check in self.checks["ip"].values():
+            if check.checkState() == 2:
+                active_checks.append(check)
+
+        self.open_pages("ip", active_checks)
+
+    def gourl(self):
+        """
+        Checks which checkboxes are marked in the IP tab, then gets a
+        valid URL for each one of them.
+        """
+        active_checks = []
+        for check in self.checks["url"].values():
+            if check.checkState() == 2:
+                active_checks.append(check)
+
+        self.open_pages("url", active_checks)
+
+    def open_pages(self, section, checks):
+        input_switch = {
+                "ip": self.ip_search_input.text(),
+                "url": self.url_search_input.text()
+                }
+        input_value = input_switch.get(section)
+        if input_value == '':
+            return False
+        # Find what provider corresponds to what marked check and append it
+        marked_providers = []
+        for check in checks:
+            check_name = check.objectName()
+            for provider in self.providers[section]:
+                if check_name == provider.name:
+                    marked_providers.append(provider)
+
+        # Execute get_url() on every provider and update progress bar
+        generated_urls = 1
+        urls = []
+        for provider in marked_providers:
+            urls.append(provider.get_url(input_value))
+            progress = (generated_urls / len(marked_providers)) * 100
+            self.progressBar.setValue(progress)
+            generated_urls += 1
+
+        for url in urls:
+            webbrowser.open(url)
+
+        # Reset progress bar
+        self.progressBar.setValue(0)
 
 
 
