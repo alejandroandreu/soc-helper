@@ -9,6 +9,8 @@ def create(pc):
         return SimpleProvider(pc)
     elif provider_type == "VirusTotalUrlProvider":
         return VirusTotalUrlProvider(pc)
+    elif provider_type == "VirusTotalFileProvider":
+        return VirusTotalFileProvider(pc)
     elif provider_type == "SnapitoProvider":
         return SnapitoProvider(pc)
     else:
@@ -27,6 +29,27 @@ class ProviderConfigException(ProviderException):
     """Raised when a provider configuration file is wrong"""
     # TODO: Print which file is wrong
     pass
+
+class VirusTotalFileProvider:
+    """
+    Provider that leverages the VirusTotal API to analyze a URL
+    """
+    def __init__(self, pc):
+        self.type = "complex"
+        self.name = pc.config.get(pc.config.sections()[0], "Name")
+        self.description = pc.config.get(pc.config.sections()[0], "Description")
+        self.provider = pc.config.get(pc.config.sections()[0], "Provider")
+        self.api_key = pc.config.get(pc.config.sections()[0], "ApiKey")
+        self.base_url = 'https://www.virustotal.com/vtapi/v2/file/report'
+
+    def get_url(self, file_hash):
+        vt_params = { 'apikey': self.api_key, 'resource': file_hash }
+        try:
+            response = requests.post(self.base_url, params=vt_params)
+            json_response = response.json()
+        except:
+            raise VTProviderException
+        return json_response['permalink']
 
 class VirusTotalUrlProvider:
     """

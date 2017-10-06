@@ -21,6 +21,8 @@ class HelperGUI(Ui_MainWindow):
         self.ip_search_input.returnPressed.connect(self.goip)
         self.url_search_button.clicked.connect(self.gourl)
         self.url_search_input.returnPressed.connect(self.gourl)
+        self.file_search_button.clicked.connect(self.gourl)
+        self.file_search_input.returnPressed.connect(self.gourl)
 
     def popup(self, title, message):
         """
@@ -38,12 +40,14 @@ class HelperGUI(Ui_MainWindow):
             names = []
             tab_switcher = {
                     "ip": self.ip_tab,
-                    "url": self.url_tab
+                    "url": self.url_tab,
+                    "file": self.file_tab
                     }
             tab = tab_switcher.get(key)
             provider_zone_switch = {
                     "ip": self.ip_providers,
-                    "url": self.url_providers
+                    "url": self.url_providers,
+                    "file": self.file_providers
                     }
             provider_zone = provider_zone_switch.get(key)
             # Load provider names in an array first
@@ -66,7 +70,7 @@ class HelperGUI(Ui_MainWindow):
     def load_providers(self, provider_dir):
         providers = {}
         # TODO: Enable the rest of the providers
-        for i in ["ip", "url"]:
+        for i in ["ip", "url", "file"]:
             providers[i] = []
             provider_configs_folder = provider_dir + "/" + i
             provider_configs = os.listdir(provider_configs_folder)
@@ -100,10 +104,23 @@ class HelperGUI(Ui_MainWindow):
 
         self.open_pages("url", active_checks)
 
+    def gofile(self):
+        """
+        Checks which checkboxes are marked in the IP tab, then gets a
+        valid URL for each one of them.
+        """
+        active_checks = []
+        for check in self.checks["file"].values():
+            if check.checkState() == 2:
+                active_checks.append(check)
+
+        self.open_pages("file", active_checks)
+
     def open_pages(self, section, checks):
         input_switch = {
                 "ip": self.ip_search_input.text(),
-                "url": self.url_search_input.text()
+                "url": self.url_search_input.text(),
+                "url": self.file_search_input.text()
                 }
         input_value = input_switch.get(section)
         if input_value == '':
