@@ -92,6 +92,41 @@
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="file_tab">
+         <attribute name="title">
+          <string>File</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_9">
+          <item>
+           <layout class="QVBoxLayout" name="file_layout">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" name="file_search_v">
+              <item>
+               <layout class="QHBoxLayout" name="file_search_h">
+                <item>
+                 <widget class="QLineEdit" name="file_search_input"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="url_search_button">
+                  <property name="text">
+                   <string>Go</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="file_providers" rowstretch="20"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
        </widget>
       </item>
      </layout>

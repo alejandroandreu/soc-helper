@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '../ui/sochelper.ui'
+# Form implementation generated from reading ui file 'ui/sochelper.ui'
 #
 # Created by: PyQt5 UI code generator 5.9
 #
@@ -70,6 +70,31 @@ class Ui_MainWindow(object):
         self.url_layout.addLayout(self.url_providers)
         self.verticalLayout_8.addLayout(self.url_layout)
         self.tabWidget.addTab(self.url_tab, "")
+        self.file_tab = QtWidgets.QWidget()
+        self.file_tab.setObjectName("file_tab")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.file_tab)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.file_layout = QtWidgets.QVBoxLayout()
+        self.file_layout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.file_layout.setObjectName("file_layout")
+        self.file_search_v = QtWidgets.QVBoxLayout()
+        self.file_search_v.setObjectName("file_search_v")
+        self.file_search_h = QtWidgets.QHBoxLayout()
+        self.file_search_h.setObjectName("file_search_h")
+        self.file_search_input = QtWidgets.QLineEdit(self.file_tab)
+        self.file_search_input.setObjectName("file_search_input")
+        self.file_search_h.addWidget(self.file_search_input)
+        self.url_search_button1 = QtWidgets.QPushButton(self.file_tab)
+        self.url_search_button1.setObjectName("url_search_button1")
+        self.file_search_h.addWidget(self.url_search_button1)
+        self.file_search_v.addLayout(self.file_search_h)
+        self.file_layout.addLayout(self.file_search_v)
+        self.file_providers = QtWidgets.QGridLayout()
+        self.file_providers.setObjectName("file_providers")
+        self.file_providers.setRowStretch(0, 20)
+        self.file_layout.addLayout(self.file_providers)
+        self.verticalLayout_9.addLayout(self.file_layout)
+        self.tabWidget.addTab(self.file_tab, "")
         self.verticalLayout.addWidget(self.tabWidget)
         self.verticalLayout_2.addLayout(self.verticalLayout)
         self.progressBar = QtWidgets.QProgressBar(self.centralwidget)
@@ -113,6 +138,8 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.ip_tab), _translate("MainWindow", "IP"))
         self.url_search_button.setText(_translate("MainWindow", "Go"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.url_tab), _translate("MainWindow", "URL"))
+        self.url_search_button1.setText(_translate("MainWindow", "Go"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.file_tab), _translate("MainWindow", "File"))
         self.menuFile.setTitle(_translate("MainWindow", "Fi&le"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.actionPreferences.setText(_translate("MainWindow", "&Preferences"))
