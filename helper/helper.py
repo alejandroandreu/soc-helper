@@ -21,8 +21,8 @@ class HelperGUI(Ui_MainWindow):
         self.ip_search_input.returnPressed.connect(self.goip)
         self.url_search_button.clicked.connect(self.gourl)
         self.url_search_input.returnPressed.connect(self.gourl)
-        self.file_search_button.clicked.connect(self.gourl)
-        self.file_search_input.returnPressed.connect(self.gourl)
+        self.file_search_button.clicked.connect(self.gofile)
+        self.file_search_input.returnPressed.connect(self.gofile)
 
     def popup(self, title, message):
         """
@@ -120,7 +120,7 @@ class HelperGUI(Ui_MainWindow):
         input_switch = {
                 "ip": self.ip_search_input.text(),
                 "url": self.url_search_input.text(),
-                "url": self.file_search_input.text()
+                "file": self.file_search_input.text()
                 }
         input_value = input_switch.get(section)
         if input_value == '':
