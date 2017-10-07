@@ -11,7 +11,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(161, 195)
+        MainWindow.resize(181, 195)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.centralwidget)
@@ -104,7 +104,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.progressBar)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 161, 30))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 181, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -120,7 +120,6 @@ class Ui_MainWindow(object):
         self.actionQuit.setObjectName("actionQuit")
         self.actionAbout_SOC_Helper = QtWidgets.QAction(MainWindow)
         self.actionAbout_SOC_Helper.setObjectName("actionAbout_SOC_Helper")
-        self.menuFile.addAction(self.actionPreferences)
         self.menuFile.addSeparator()
         self.menuFile.addAction(self.actionQuit)
         self.menuHelp.addAction(self.actionAbout_SOC_Helper)

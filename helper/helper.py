@@ -27,6 +27,14 @@ class HelperGUI(Ui_MainWindow):
         self.file_search_button.clicked.connect(self.gofile)
         self.file_search_input.returnPressed.connect(self.gofile)
 
+        # Menu actions
+        self.actionAbout_SOC_Helper.triggered.connect(self.about_popup)
+        self.actionQuit.triggered.connect(sys.exit)
+
+    def about_popup(self):
+        """Display a popup with the given message"""
+        QtWidgets.QMessageBox.about(main_window, "About", utils.ABOUT_MESSAGE)
+
     def popup(self, title, message):
         """Display a popup with the given message"""
         QtWidgets.QMessageBox.about(main_window, title, message)
