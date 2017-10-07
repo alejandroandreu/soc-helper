@@ -110,7 +110,7 @@
                  <widget class="QLineEdit" name="file_search_input"/>
                 </item>
                 <item>
-                 <widget class="QPushButton" name="url_search_button">
+                 <widget class="QPushButton" name="file_search_button">
                   <property name="text">
                    <string>Go</string>
                   </property>

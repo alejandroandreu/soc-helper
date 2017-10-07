@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'ui/sochelper.ui'
+# Form implementation generated from reading ui file '../ui/sochelper.ui'
 #
 # Created by: PyQt5 UI code generator 5.9
 #
@@ -84,9 +84,9 @@ class Ui_MainWindow(object):
         self.file_search_input = QtWidgets.QLineEdit(self.file_tab)
         self.file_search_input.setObjectName("file_search_input")
         self.file_search_h.addWidget(self.file_search_input)
-        self.url_search_button1 = QtWidgets.QPushButton(self.file_tab)
-        self.url_search_button1.setObjectName("url_search_button1")
-        self.file_search_h.addWidget(self.url_search_button1)
+        self.file_search_button = QtWidgets.QPushButton(self.file_tab)
+        self.file_search_button.setObjectName("file_search_button")
+        self.file_search_h.addWidget(self.file_search_button)
         self.file_search_v.addLayout(self.file_search_h)
         self.file_layout.addLayout(self.file_search_v)
         self.file_providers = QtWidgets.QGridLayout()
@@ -138,7 +138,7 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.ip_tab), _translate("MainWindow", "IP"))
         self.url_search_button.setText(_translate("MainWindow", "Go"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.url_tab), _translate("MainWindow", "URL"))
-        self.url_search_button1.setText(_translate("MainWindow", "Go"))
+        self.file_search_button.setText(_translate("MainWindow", "Go"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.file_tab), _translate("MainWindow", "File"))
         self.menuFile.setTitle(_translate("MainWindow", "Fi&le"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
