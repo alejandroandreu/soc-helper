@@ -14,21 +14,34 @@ def create(pc):
     elif provider_type == "SnapitoProvider":
         return SnapitoProvider(pc)
     else:
-        raise ProviderException
+        raise ProviderConfigError(pc,
+            "{pcp}: {pt} is not a valid provider type".format(pcp=pc.path,pt=provider_type))
 
 
-class ProviderException(Exception):
+class ProviderError(Exception):
     """Basic exception for errors raised by providers"""
-    pass
+    def __init__(self, provider, msg=None):
+        if msg is None:
+            msg = "An error ocurred with provider {}".format(provider)
+        super(ProviderException, self).__init__(msg)
+        self.provider = provider
 
-class VTProviderException(ProviderException):
+class VirusTotalError(ProviderError):
     """Raised when there is an error obtaining the final VirusTotal URL"""
-    pass
+    def __init__(self, provider, res, query):
+        super(VirusTotalError, self).__init__(
+            provider,
+            msg="Error retrieving report from VirusTotal for {res}: {query}".format(res=res, query=query))
+        self.resource = res
+        self.query = query
 
-class ProviderConfigException(ProviderException):
+class ProviderConfigError(Exception):
     """Raised when a provider configuration file is wrong"""
-    # TODO: Print which file is wrong
-    pass
+    def __init__(self, provider_config_path, msg=None):
+        if msg is None:
+            msg = "An error ocurred with provider configuration {}".format(provider_config_path)
+        super(ProviderConfigError, self).__init__(msg)
+        self.provider_config_path = provider_config_path
 
 class VirusTotalFileProvider:
     """
@@ -48,7 +61,7 @@ class VirusTotalFileProvider:
             response = requests.post(self.base_url, params=vt_params)
             json_response = response.json()
         except:
-            raise VTProviderException
+            raise VirusTotalError(self, "file hash", file_hash)
         return json_response['permalink']
 
 class VirusTotalUrlProvider:
@@ -69,7 +82,7 @@ class VirusTotalUrlProvider:
             response = requests.post(self.base_url, params=vt_params)
             json_response = response.json()
         except:
-            raise VTProviderException
+            raise VirusTotalError(self, "URL", url)
         return json_response['permalink']
 
 class SnapitoProvider:
@@ -116,7 +129,7 @@ class ProviderConfig:
         try:
             self.config.read(self.path)
         except configparser.Error:
-            raise ProviderConfigException
+            raise ProviderConfigError(self.path)
         self.validate()
 
     def keys(self):
@@ -139,5 +152,8 @@ class ProviderConfig:
             lowercase_keys = [key.lower() for key in self.keys()]
             if set(lowercase_keys) == set(config):
                 return True
+        raise ProviderConfigError(self.path,
+            "Provider configuration at {} doesn't seem to be valid.".format(self.path))
 
-        raise ProviderConfigException
+    def __str__(self):
+        return self.path

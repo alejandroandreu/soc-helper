@@ -17,8 +17,7 @@ class HelperGUI(Ui_MainWindow):
             self.checks = {}
             self.draw_checkboxes(self.providers)
         except Exception as e:
-            print(e)
-            self.popup("Exception", "An exception ocurred!")
+            self.popup("Error", "Something went wrong:\n\n{}".format(e))
 
         # Tie input fields and "Go" buttons to functions
         self.ip_search_button.clicked.connect(self.goip)
@@ -29,9 +28,7 @@ class HelperGUI(Ui_MainWindow):
         self.file_search_input.returnPressed.connect(self.gofile)
 
     def popup(self, title, message):
-        """
-        Display a popup with the given message
-        """
+        """Display a popup with the given message"""
         QtWidgets.QMessageBox.about(main_window, title, message)
 
     def draw_checkboxes(self, providers):
