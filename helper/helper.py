@@ -1,6 +1,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ui import Ui_MainWindow
-import provider, utils, sys, os, webbrowser
+import provider, utils, sys, os, webbrowser, re
 
 class HelperGUI(Ui_MainWindow):
     """
@@ -12,9 +12,13 @@ class HelperGUI(Ui_MainWindow):
         self.setupUi(main_window)
 
         # Load providers for each type of resource
-        self.providers = self.load_providers("../providers")
-        self.checks = {}
-        self.draw_checkboxes(self.providers)
+        try:
+            self.providers = self.load_providers("../providers")
+            self.checks = {}
+            self.draw_checkboxes(self.providers)
+        except Exception as e:
+            print(e)
+            self.popup("Exception", "An exception ocurred!")
 
         # Tie input fields and "Go" buttons to functions
         self.ip_search_button.clicked.connect(self.goip)
@@ -79,6 +83,15 @@ class HelperGUI(Ui_MainWindow):
                 providers[i].append(provider.create(provider.ProviderConfig(pc_full_path)))
         return providers
 
+    def validate_input(self, user_input, regex):
+        """
+        Validate input against a given regex and return a boolean
+        """
+        pattern = re.compile(regex)
+        if pattern.match(user_input):
+            return True
+        return False
+
     # TODO: Unify all "go" functions
     def goip(self):
         """
@@ -89,6 +102,12 @@ class HelperGUI(Ui_MainWindow):
         for check in self.checks["ip"].values():
             if check.checkState() == 2:
                 active_checks.append(check)
+
+        # Validathe the input before doing anything else
+        user_input = self.ip_search_input.text()
+        if not self.validate_input(user_input, utils.REGEX_IP):
+            self.popup("Invalid input", "{} doesn't seem to be a valid IP.".format(user_input))
+            return False
 
         self.open_pages("ip", active_checks)
 
@@ -102,6 +121,12 @@ class HelperGUI(Ui_MainWindow):
             if check.checkState() == 2:
                 active_checks.append(check)
 
+        # Validathe the input before doing anything else
+        user_input = self.url_search_input.text()
+        if not self.validate_input(user_input, utils.REGEX_URL):
+            self.popup("Invalid input", "{} doesn't seem to be a valid URL.".format(user_input))
+            return False
+
         self.open_pages("url", active_checks)
 
     def gofile(self):
@@ -114,6 +139,12 @@ class HelperGUI(Ui_MainWindow):
             if check.checkState() == 2:
                 active_checks.append(check)
 
+        # Validathe the input before doing anything else
+        user_input = self.file_search_input.text()
+        if not self.validate_input(user_input, utils.REGEX_FILE_HASH):
+            self.popup("Invalid input", "{} doesn't seem to be a valid file hash.".format(user_input))
+            return False
+
         self.open_pages("file", active_checks)
 
     def open_pages(self, section, checks):
@@ -125,6 +156,7 @@ class HelperGUI(Ui_MainWindow):
         input_value = input_switch.get(section)
         if input_value == '':
             return False
+
         # Find what provider corresponds to what marked check and append it
         marked_providers = []
         for check in checks:
