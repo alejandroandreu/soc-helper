@@ -110,7 +110,7 @@ class HelperGUI(Ui_MainWindow):
 
         # Validathe the input before doing anything else
         user_input = self.ip_search_input.text()
-        if not self.validate_input(user_input, utils.REGEX_IP):
+        if not self.validate_input(user_input, utils.REGEX_IP) and user_input != '':
             self.popup("Invalid input", "{} doesn't seem to be a valid IP.".format(user_input))
             return False
 
@@ -128,7 +128,7 @@ class HelperGUI(Ui_MainWindow):
 
         # Validathe the input before doing anything else
         user_input = self.url_search_input.text()
-        if not self.validate_input(user_input, utils.REGEX_URL):
+        if not self.validate_input(user_input, utils.REGEX_URL) and user_input != '':
             self.popup("Invalid input", "{} doesn't seem to be a valid URL.".format(user_input))
             return False
 
@@ -146,7 +146,7 @@ class HelperGUI(Ui_MainWindow):
 
         # Validathe the input before doing anything else
         user_input = self.file_search_input.text()
-        if not self.validate_input(user_input, utils.REGEX_FILE_HASH):
+        if not self.validate_input(user_input, utils.REGEX_FILE_HASH) and user_input != '':
             self.popup("Invalid input", "{} doesn't seem to be a valid file hash.".format(user_input))
             return False
 
