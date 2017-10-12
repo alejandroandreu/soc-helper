@@ -78,7 +78,6 @@ class HelperGUI(Ui_MainWindow):
 
     def load_providers(self, provider_dir):
         providers = {}
-        # TODO: Enable the rest of the providers
         for i in ["ip", "url", "file"]:
             providers[i] = []
             provider_configs_folder = provider_dir + "/" + i
@@ -109,7 +108,7 @@ class HelperGUI(Ui_MainWindow):
                 active_checks.append(check)
 
         # Validathe the input before doing anything else
-        user_input = self.ip_search_input.text()
+        user_input = self.ip_search_input.text().replace(" ", "")
         if not self.validate_input(user_input, utils.REGEX_IP) and user_input != '':
             self.popup("Invalid input", "{} doesn't seem to be a valid IP.".format(user_input))
             return False
@@ -127,7 +126,7 @@ class HelperGUI(Ui_MainWindow):
                 active_checks.append(check)
 
         # Validathe the input before doing anything else
-        user_input = self.url_search_input.text()
+        user_input = self.url_search_input.text().replace(" ", "")
         if not self.validate_input(user_input, utils.REGEX_URL) and user_input != '':
             self.popup("Invalid input", "{} doesn't seem to be a valid URL.".format(user_input))
             return False
@@ -145,7 +144,7 @@ class HelperGUI(Ui_MainWindow):
                 active_checks.append(check)
 
         # Validathe the input before doing anything else
-        user_input = self.file_search_input.text()
+        user_input = self.file_search_input.text().replace(" ", "")
         if not self.validate_input(user_input, utils.REGEX_FILE_HASH) and user_input != '':
             self.popup("Invalid input", "{} doesn't seem to be a valid file hash.".format(user_input))
             return False
@@ -158,7 +157,7 @@ class HelperGUI(Ui_MainWindow):
                 "url": self.url_search_input.text(),
                 "file": self.file_search_input.text()
                 }
-        input_value = input_switch.get(section)
+        input_value = input_switch.get(section).replace(" ", "")
         if input_value == '':
             return False
 
@@ -174,7 +173,10 @@ class HelperGUI(Ui_MainWindow):
         generated_urls = 1
         urls = []
         for provider in marked_providers:
-            urls.append(provider.get_url(input_value))
+            try:
+                urls.append(provider.get_url(input_value))
+            except Exception as e:
+                self.popup("Error", "Something went wrong:\n\n{}".format(e))
             progress = (generated_urls / len(marked_providers)) * 100
             self.progressBar.setValue(progress)
             generated_urls += 1

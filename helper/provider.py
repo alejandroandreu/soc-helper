@@ -23,7 +23,7 @@ class ProviderError(Exception):
     def __init__(self, provider, msg=None):
         if msg is None:
             msg = "An error ocurred with provider {}".format(provider)
-        super(ProviderException, self).__init__(msg)
+        super(ProviderError, self).__init__(msg)
         self.provider = provider
 
 class VirusTotalError(ProviderError):
