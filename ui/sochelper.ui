@@ -92,9 +92,44 @@
           </item>
          </layout>
         </widget>
+        <widget class="QWidget" name="domain_tab">
+         <attribute name="title">
+          <string>Domain</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_8">
+          <item>
+           <layout class="QVBoxLayout" name="domain_layout">
+            <property name="sizeConstraint">
+             <enum>QLayout::SetDefaultConstraint</enum>
+            </property>
+            <item>
+             <layout class="QVBoxLayout" name="domain_search_v">
+              <item>
+               <layout class="QHBoxLayout" name="domain_search_h">
+                <item>
+                 <widget class="QLineEdit" name="domain_search_input"/>
+                </item>
+                <item>
+                 <widget class="QPushButton" name="domain_search_button">
+                  <property name="text">
+                   <string>Go</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QGridLayout" name="domain_providers" rowstretch="20"/>
+            </item>
+           </layout>
+          </item>
+         </layout>
+        </widget>
         <widget class="QWidget" name="file_tab">
          <attribute name="title">
-          <string>File</string>
+          <string>File Hash</string>
          </attribute>
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>

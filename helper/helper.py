@@ -24,6 +24,8 @@ class HelperGUI(Ui_MainWindow):
         self.ip_search_input.returnPressed.connect(self.goip)
         self.url_search_button.clicked.connect(self.gourl)
         self.url_search_input.returnPressed.connect(self.gourl)
+        self.domain_search_button.clicked.connect(self.godomain)
+        self.domain_search_input.returnPressed.connect(self.godomain)
         self.file_search_button.clicked.connect(self.gofile)
         self.file_search_input.returnPressed.connect(self.gofile)
 
@@ -50,12 +52,14 @@ class HelperGUI(Ui_MainWindow):
             tab_switcher = {
                     "ip": self.ip_tab,
                     "url": self.url_tab,
+                    "domain": self.domain_tab,
                     "file": self.file_tab
                     }
             tab = tab_switcher.get(key)
             provider_zone_switch = {
                     "ip": self.ip_providers,
                     "url": self.url_providers,
+                    "domain": self.domain_providers,
                     "file": self.file_providers
                     }
             provider_zone = provider_zone_switch.get(key)
@@ -78,7 +82,7 @@ class HelperGUI(Ui_MainWindow):
 
     def load_providers(self, provider_dir):
         providers = {}
-        for i in ["ip", "url", "file"]:
+        for i in ["ip", "url", "domain", "file"]:
             providers[i] = []
             provider_configs_folder = provider_dir + "/" + i
             provider_configs = os.listdir(provider_configs_folder)
@@ -107,7 +111,7 @@ class HelperGUI(Ui_MainWindow):
             if check.checkState() == 2:
                 active_checks.append(check)
 
-        # Validathe the input before doing anything else
+        # Validate the input before doing anything else
         user_input = self.ip_search_input.text().replace(" ", "")
         if not self.validate_input(user_input, utils.REGEX_IP) and user_input != '':
             self.popup("Invalid input", "{} doesn't seem to be a valid IP.".format(user_input))
@@ -117,7 +121,7 @@ class HelperGUI(Ui_MainWindow):
 
     def gourl(self):
         """
-        Checks which checkboxes are marked in the IP tab, then gets a
+        Checks which checkboxes are marked in the URL tab, then gets a
         valid URL for each one of them.
         """
         active_checks = []
@@ -125,13 +129,31 @@ class HelperGUI(Ui_MainWindow):
             if check.checkState() == 2:
                 active_checks.append(check)
 
-        # Validathe the input before doing anything else
+        # Validate the input before doing anything else
         user_input = self.url_search_input.text().replace(" ", "")
         if not self.validate_input(user_input, utils.REGEX_URL) and user_input != '':
             self.popup("Invalid input", "{} doesn't seem to be a valid URL.".format(user_input))
             return False
 
         self.open_pages("url", active_checks)
+
+    def godomain(self):
+        """
+        Checks which checkboxes are marked in the domain tab, then gets a
+        valid URL for each one of them.
+        """
+        active_checks = []
+        for check in self.checks["domain"].values():
+            if check.checkState() == 2:
+                active_checks.append(check)
+
+        # Validate the input before doing anything else
+        user_input = self.domain_search_input.text().replace(" ", "")
+        if not self.validate_input(user_input, utils.REGEX_DOMAIN) and user_input != '':
+            self.popup("Invalid input", "{} doesn't seem to be a valid domain.".format(user_input))
+            return False
+
+        self.open_pages("domain", active_checks)
 
     def gofile(self):
         """
@@ -143,7 +165,7 @@ class HelperGUI(Ui_MainWindow):
             if check.checkState() == 2:
                 active_checks.append(check)
 
-        # Validathe the input before doing anything else
+        # Validate the input before doing anything else
         user_input = self.file_search_input.text().replace(" ", "")
         if not self.validate_input(user_input, utils.REGEX_FILE_HASH) and user_input != '':
             self.popup("Invalid input", "{} doesn't seem to be a valid file hash.".format(user_input))
@@ -155,6 +177,7 @@ class HelperGUI(Ui_MainWindow):
         input_switch = {
                 "ip": self.ip_search_input.text(),
                 "url": self.url_search_input.text(),
+                "domain": self.domain_search_input.text(),
                 "file": self.file_search_input.text()
                 }
         input_value = input_switch.get(section).replace(" ", "")

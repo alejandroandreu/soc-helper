@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file '../ui/sochelper.ui'
+# Form implementation generated from reading ui file 'ui/sochelper.ui'
 #
 # Created by: PyQt5 UI code generator 5.9
 #
@@ -70,6 +70,31 @@ class Ui_MainWindow(object):
         self.url_layout.addLayout(self.url_providers)
         self.verticalLayout_8.addLayout(self.url_layout)
         self.tabWidget.addTab(self.url_tab, "")
+        self.domain_tab = QtWidgets.QWidget()
+        self.domain_tab.setObjectName("domain_tab")
+        self.verticalLayout_81 = QtWidgets.QVBoxLayout(self.domain_tab)
+        self.verticalLayout_81.setObjectName("verticalLayout_81")
+        self.domain_layout = QtWidgets.QVBoxLayout()
+        self.domain_layout.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.domain_layout.setObjectName("domain_layout")
+        self.domain_search_v = QtWidgets.QVBoxLayout()
+        self.domain_search_v.setObjectName("domain_search_v")
+        self.domain_search_h = QtWidgets.QHBoxLayout()
+        self.domain_search_h.setObjectName("domain_search_h")
+        self.domain_search_input = QtWidgets.QLineEdit(self.domain_tab)
+        self.domain_search_input.setObjectName("domain_search_input")
+        self.domain_search_h.addWidget(self.domain_search_input)
+        self.domain_search_button = QtWidgets.QPushButton(self.domain_tab)
+        self.domain_search_button.setObjectName("domain_search_button")
+        self.domain_search_h.addWidget(self.domain_search_button)
+        self.domain_search_v.addLayout(self.domain_search_h)
+        self.domain_layout.addLayout(self.domain_search_v)
+        self.domain_providers = QtWidgets.QGridLayout()
+        self.domain_providers.setObjectName("domain_providers")
+        self.domain_providers.setRowStretch(0, 20)
+        self.domain_layout.addLayout(self.domain_providers)
+        self.verticalLayout_81.addLayout(self.domain_layout)
+        self.tabWidget.addTab(self.domain_tab, "")
         self.file_tab = QtWidgets.QWidget()
         self.file_tab.setObjectName("file_tab")
         self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.file_tab)
@@ -137,8 +162,10 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.ip_tab), _translate("MainWindow", "IP"))
         self.url_search_button.setText(_translate("MainWindow", "Go"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.url_tab), _translate("MainWindow", "URL"))
+        self.domain_search_button.setText(_translate("MainWindow", "Go"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.domain_tab), _translate("MainWindow", "Domain"))
         self.file_search_button.setText(_translate("MainWindow", "Go"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.file_tab), _translate("MainWindow", "File"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.file_tab), _translate("MainWindow", "File Hash"))
         self.menuFile.setTitle(_translate("MainWindow", "Fi&le"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.actionPreferences.setText(_translate("MainWindow", "&Preferences"))
