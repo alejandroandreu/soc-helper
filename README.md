@@ -57,9 +57,9 @@ BaseUrl = https://www.abuseipdb.com/check/$$ARG$$
 
 * `[AbuseIPDB]` (Mandatory) The identifier between brackets can be set to anything
 * `Name` (Mandatory) is the name that will be displayed in the application
-* `Description` (Optional) can be left blank
-* `Provider` needs to be set to `SimpleProvider`
-* `BaseUrl` can be any URL, and `$$ARG$$` will be replaced by the user's input
+* `Description` (Optional) can be left blank or filled, the field will be used later
+* `Provider` (Mandatory) needs to be set to `SimpleProvider`
+* `BaseUrl` (Mandatory) can be any URL, and `$$ARG$$` will be replaced by the user's input
 
 ### Complex Provider
 
